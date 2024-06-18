@@ -1,7 +1,5 @@
 # Prostate Imaging Test
 
----
-
 ## Dataset Citation
 
 ### Annotations
