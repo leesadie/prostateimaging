@@ -1,5 +1,5 @@
 ,ID,Clinically Significant,Gleason Grade Group,image_path
-0,ProstateX-0000_Finding1,True,3,Dataset002_Prostate/lesions/Images/T2\ProstateX-0000_Finding1.nii.gz
+0,ProstateX-0000_Finding1,True,3,ProstateX-0000_t2_tse_tra_4.nii.gz
 1,ProstateX-0001_Finding1,False,1,Dataset002_Prostate/lesions/Images/T2\ProstateX-0001_Finding1.nii.gz
 2,ProstateX-0002_Finding1,True,2,Dataset002_Prostate/lesions/Images/T2\ProstateX-0002_Finding1.nii.gz
 4,ProstateX-0003_Finding1,False,No biopsy information,Dataset002_Prostate/lesions/Images/T2\ProstateX-0003_Finding1.nii.gz
