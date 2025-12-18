@@ -1,19 +1,38 @@
-# Prostate Imaging Test
+# Prostate Imaging Models
 
-## Dataset Citation
+Tests from building models with 3D prostate MR images to design and validate an end-to-end workflow for modeling with medical image data.
 
-### Annotations
+## Models
+
+**Detection model**
+- Objective: Predict if an image contains tumor(s) that are either clinically significant or not, where clinical significance refers to having a Gleason score greater than or equal to 7, volume greater than or equal to 0.5cc, and/or extraprostatic extension.
+- Architecture: MONAI ResNet10
+- Metrics: AUC, sensitivity, specificity
+
+**Classification model**
+- Objective: Predict the Gleason grade group (1-5) of an image, where the Gleason grade group is a simplified method to classify aggressiveness, and describes the histologic pattern of glands in the tumor. Higher grade groups indicate greater aggression.
+- Architecture: 
+- Metrics: AUC
+
+**Segmentation model**
+- Objective: Segment tumor(s) in an image based on masks.
+- Architecture: U-Net
+- Metrics: Dice score
+
+## Data
+
+**ProstateX**
+- Geert Litjens, Oscar Debats, Jelle Barentsz, Nico Karssemeijer, and Henkjan Huisman. "ProstateX Challenge data", The Cancer Imaging Archive (2017). DOI: 10.7937/K9TCIA.2017.MURS5CL
+
+**Annotations**
 
 - R. Cuocolo, A. Stanzione, A. Castaldo, D.R. De Lucia, M. Imbriaco, Quality control and whole-gland, zonal and lesion annotations for the PROSTATEx challenge public dataset, Eur. J. Radiol. (2021) 109647. [https://doi.org/10.1016/j.ejrad.2021.109647](https://doi.org/10.1016/j.ejrad.2021.109647)
-- Cuocolo R, Comelli A, Stefano A, et al (2021) Deep Learning Whole‐Gland and Zonal Prostate Segmentation on a Public MRI Dataset. J Magn Reson Imaging. [https://doi.org/10.1002/jmri.27585](https://doi.org/10.1002/jmri.27585)
 - Github link: [https://github.com/rcuocolo/PROSTATEx_masks](https://github.com/rcuocolo/PROSTATEx_masks)
 
-### PROSTATEX Dataset
+## Usage
 
-- Geert Litjens, Oscar Debats, Jelle Barentsz, Nico Karssemeijer, and Henkjan Huisman. "ProstateX Challenge data", The Cancer Imaging Archive (2017). DOI: 10.7937/K9TCIA.2017.MURS5CL
-- Litjens G, Debats O, Barentsz J, Karssemeijer N, Huisman H. "Computer-aided detection of prostate cancer in MRI", IEEE Transactions on Medical Imaging 2014;33:1083-1092. DOI: 10.1109/TMI.2014.2303821
-- Clark K, Vendt B, Smith K, Freymann J, Kirby J, Koppel P, Moore S, Phillips S, Maffitt D, Pringle M, Tarbox L, Prior F. The Cancer Imaging Archive (TCIA): Maintaining and Operating a Public Information Repository, Journal of Digital Imaging, Volume 26, Number 6, December, 2013, pp 1045-1057. DOI: 10.1007/s10278-013-9622-7
+View package requirements and install with
 
-## Segmentation UNet Architecture
-
-![architecture](UNet-repr.png)
+```
+pip install -r requirements.txt
+```
