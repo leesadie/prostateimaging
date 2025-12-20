@@ -15,7 +15,7 @@ def train_model(
         path="best_model.pt"
 ):
     """
-    Base training loop with TensorBoard logging
+    Base training loop for classification models with TensorBoard logging
     """
     best_val_auc = -np.inf
     
@@ -89,3 +89,81 @@ def train_model(
 
     print(f"Best val AUC: {best_val_auc:.4f}")  
     return model
+
+def train_seg_model(
+    model,
+    train_loader,
+    val_loader,
+    optimizer,
+    criterion,
+    dice_metric,
+    device,
+    epochs=50,
+    writer=None,
+    task_name="segmentation",
+    path="best_model.pt"
+):
+    best_val_dice = -1.0
+
+    for epoch in range(epochs):
+        model = model.to(device)
+
+        # Train
+        model.train()
+        train_losses = []
+
+        for batch in train_loader:
+            images = batch["image"].to(device).float()
+            masks = batch["mask"].to(device).float()
+
+            optimizer.zero_grad()
+            logits = model(images)
+            loss = criterion(logits, masks)
+
+            loss.backward()
+            optimizer.step()
+            train_losses.append(loss.item())
+
+        train_loss = np.mean(train_losses)
+
+        # Val
+        model.eval()
+        dice_metric.reset()
+        val_losses = []
+
+        with torch.no_grad():
+            for batch in val_loader:
+                images = batch["image"].to(device).float()
+                masks = batch["mask"].to(device).float()
+
+                logits = model(images)
+                loss = criterion(logits, masks)
+                val_losses.append(loss.item())
+
+                preds = torch.sigmoid(logits)
+                preds = (preds > 0.5).float()
+                dice_metric(preds, masks)
+
+        val_loss = np.mean(val_losses)
+        val_dice = dice_metric.aggregate().item()
+
+        print(
+            f"Epoch {epoch+1}/{epochs} | "
+            f"Train loss: {train_loss:.4f} | "
+            f"Val loss: {val_loss:.4f} | "
+            f"Val Dice: {val_dice:.4f}"
+        )
+
+        if writer:
+            writer.add_scalar(f"{task_name}/Loss/train", train_loss, epoch)
+            writer.add_scalar(f"{task_name}/Loss/val", val_loss, epoch)
+            writer.add_scalar(f"{task_name}/Dice/val", val_dice, epoch)
+
+        # Save model
+        if val_dice > best_val_dice:
+            best_val_dice = val_dice
+            torch.save(model.state_dict(), path)
+
+    print(f"Best val Dice: {best_val_dice:.4f}")
+    return model
+                

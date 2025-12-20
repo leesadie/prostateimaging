@@ -1,6 +1,6 @@
 # Prostate Imaging Models
 
-Tests from building models with 3D prostate MR images to design and validate an end-to-end workflow for modeling with medical image data.
+Tests from building models with 3D prostate MR images to design and validate an end-to-end workflow for modeling with medical image data. Models are built for testing this workflow only.
 
 ## Models
 
@@ -9,14 +9,9 @@ Tests from building models with 3D prostate MR images to design and validate an 
 - Architecture: MONAI ResNet10
 - Metrics: AUC, sensitivity, specificity
 
-**Classification model**
-- Objective: Predict the Gleason grade group (1-5) of an image, where the Gleason grade group is a simplified method to classify aggressiveness, and describes the histologic pattern of glands in the tumor. Higher grade groups indicate greater aggression.
-- Architecture: 
-- Metrics: AUC
-
 **Segmentation model**
 - Objective: Segment tumor(s) in an image based on masks.
-- Architecture: U-Net
+- Architecture: MONAI U-Net
 - Metrics: Dice score
 
 ## Data
@@ -33,6 +28,7 @@ Tests from building models with 3D prostate MR images to design and validate an 
 
 View package requirements and install with
 
-```
-pip install -r requirements.txt
+```bash
+conda env create -f environment.yml
+conda activate prostatemr
 ```
