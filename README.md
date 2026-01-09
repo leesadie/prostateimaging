@@ -1,6 +1,8 @@
 # Prostate Imaging Models
 
-Tests from building models with 3D prostate MR images to design and validate an end-to-end workflow for modeling with medical image data. Models are built for testing this workflow only.
+The models in this repository were built solely as test cases to validate an end-to-end workflow for AI/ML modeling with medical image data. No effort was made to optimize model performance or accuracy, and thus models are not meant for clinical or research decision-making.
+
+These tests involve building models with 3D prostate MR images to design and validate workflows for customers building AI/ML models with medical imaging data.
 
 ## Models
 
